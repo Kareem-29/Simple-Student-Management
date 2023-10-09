@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
+    <link rel="stylesheet" href="/mystyle.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+
+
+<body>
+    <div class="container">
+        <h1><span> Student Management System</span></h1>
+        
+        <form action="/create" method="post" class="">
+            
+        <div class="row align-items-center pb-3 pt-2">
+
+                <label for="stdName" class="col-auto">Student Name</label>
+                    <div class="col-4">
+                        <input type="text" pattern="[A-Za-z]+" title="Only letters are allowed" class="form-control" for="stdName" name="stdName" placeholder="Enter Student Name" required="true">
+                    </div>
+        
+                <label for="stdAge" class="col-auto">Studnet Age</label>
+                    <div class="col-auto">
+                        <input type="number" class="form-control" for="stdAge" name="stdAge" placeholder="Enter Student Age" required="true" min="10" >
+                    </div>
+            
+            <div class="col-auto ">
+                <button type="submit" class="btn btn-primary">Add Student <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                  </svg>
+                </button>
+            </div> 
+        </div>
+        </form>
+
+        <div class="student-list">
+            <% if(stdRecord.length>0){ %>
+                <div >
+                    <table class="table table-dark table-striped ">
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Student Age</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr> 
+                            <% stdRecord.forEach(record => {%>
+                                <%if(record._id == idRecord) {%>
+                                <!--update name-->
+                                <form action="/update/<%=record._id%>?_method=PUT" method="post"> 
+                                    
+                                        <td>
+                                            <input type="text" pattern="[A-Z a-z]+" title="Only letters are allowed" class="form-control" value="<%=record.name%>" name="stdName" required="true">
+                                        </td>
+
+                                        <td>
+                                            <div class="ageField">
+                                                <input type="number" min="10" class="form-control" value="<%=record.age%>" name="stdAge" required="true">
+                                            </div>
+                                        </td>
+
+                                        <td class="align-right">
+                                            <!--accept the changes-->
+                                            <span class="align-items">
+                                                
+                                            <button type="submit" class="btn btn-link"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#279EFF" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                                            </svg>
+                                            </button>
+                                            
+                                                <!--cancel the changes-->
+                                            <a style="text-decoration: none;" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#D71313" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            </svg></a>
+                                            </span>
+                                        </td>
+                                    
+                                </form>
+
+                                <%} else{%>
+                                <td>
+                                    <%=record.name%> 
+                                </td>
+                                <td>
+                                    <%=record.age%>
+                                </td>
+
+                                <td class="align-right">
+                                
+                                <!--update student record-->
+                                <span class="align-items"><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#279EFF" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                                    </svg></a></span>
+                                      
+                                    <!--delete student record-->
+                                <span class="align-items">
+                                <a href="/delete/<%=record._id%>?_method=delete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#D71313" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                                    </svg></a>
+                                </span> 
+                                
+                                </td><% } %>
+
+                            </tr>
+                            <% })%>
+                        </tbody>
+                    </table>
+                    <%}%>
+                </div>
+        </div>
+    </div>
+    
+</body>
+</html>
